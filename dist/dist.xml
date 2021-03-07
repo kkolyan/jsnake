@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dist" default="all">
+    <property name="finalName" value="snake"/>
+
+    <target name="clean">
+<!--        <delete dir="../target"/>-->
+<!--        <mkdir dir="../target"/>-->
+    </target>
+
+    <target name="all" depends="full"/>
+
+    <target name="prepare-full" depends="jre,executable"/>
+
+    <target name="full" depends="prepare-full">
+        <zip destfile="../target/${finalName}-full.zip"
+             basedir="../target"
+             includes="${finalName}-full/**/*"/>
+    </target>
+
+    <target name="jre" depends="clean">
+        <property name="jreDir" value="../target/${finalName}-full/jre"/>
+        <delete dir="${jreDir}"/>
+        <exec executable="cmd">
+            <arg value="/c"/>
+            <arg value="bundle_jre.cmd"/>
+            <arg value="${jreDir}"/>
+        </exec>
+    </target>
+
+
+    <target name="executable" depends="clean">
+        <copy file="../target/snake.exe" todir="../target/${finalName}-full"/>
+    </target>
+
+</project>
